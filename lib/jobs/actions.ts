@@ -5,6 +5,18 @@ import { listAgents } from "@/lib/agents/store";
 import { pickAgentForCapability } from "@/lib/agents/pick";
 import { enqueueJob } from "./store";
 
+export async function enqueueOutreachAction(leadId: string) {
+  const { userId } = await auth();
+  if (!userId) return { ok: false as const, error: "Not signed in." };
+  const lead = await getLead(userId, leadId);
+  if (!lead) return { ok: false as const, error: "Brand not found." };
+  const agents = await listAgents(userId);
+  const agent = pickAgentForCapability(agents, "outreach", lead.agentId);
+  if (!agent) return { ok: false as const, error: "No Outreach-capable helper is available." };
+  await enqueueJob(userId, agent.id, "outreach", { leadId });
+  return { ok: true as const };
+}
+
 export async function enqueueProposalAction(leadId: string) {
   const { userId } = await auth();
   if (!userId) return { ok: false as const, error: "Not signed in." };

@@ -47,6 +47,20 @@ export async function claimJobs(userId: string, kinds: JobKind[], limit = 5): Pr
   return claimed;
 }
 
+// Claims one specific job by id (used by chat, which just created it and
+// wants to run it immediately). Still guards on status='queued' so it can
+// never double-process a job another runner already picked up.
+export async function claimJobById(userId: string, id: string): Promise<JobRecord | null> {
+  const db = getDb();
+  if (!db) return null;
+  const updated = await db
+    .update(jobs)
+    .set({ status: "running", startedAt: new Date() })
+    .where(and(eq(jobs.id, id), eq(jobs.userId, userId), eq(jobs.status, "queued")))
+    .returning();
+  return updated[0] ? toJob(updated[0]) : null;
+}
+
 export async function completeJob(id: string, result: Record<string, unknown>) {
   const db = getDb();
   if (!db) return;

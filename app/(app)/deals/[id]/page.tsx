@@ -10,6 +10,7 @@ import ProposalList from "@/components/deals/ProposalList";
 import DraftList from "@/components/deals/DraftList";
 import ResearchBrief from "@/components/deals/ResearchBrief";
 import RunJobButton from "@/components/jobs/RunJobButton";
+import BookMeetingForm from "@/components/meetings/BookMeetingForm";
 
 export default async function LeadDetailPage({ params }: { params: { id: string } }) {
   const { userId } = await auth();
@@ -37,10 +38,16 @@ export default async function LeadDetailPage({ params }: { params: { id: string 
       <LeadControls lead={lead} agents={agents} />
 
       <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
+        <RunJobButton kind="outreach" leadId={lead.id} label="Draft pitch" busyLabel="Drafting pitch…" />
         <RunJobButton kind="research" leadId={lead.id} label="Write brief" busyLabel="Researching…" variant="secondary" />
         <RunJobButton kind="proposal" leadId={lead.id} label="Draft proposal" busyLabel="Drafting proposal…" />
         <RunJobButton kind="follow-up" leadId={lead.id} label="Follow up" busyLabel="Writing follow-up…" variant="secondary" />
       </div>
+
+      <section style={{ display: "flex", flexDirection: "column", gap: 14 }}>
+        <h2 style={{ fontSize: 16, fontWeight: 800, margin: 0 }}>Book a call</h2>
+        <BookMeetingForm lead={lead} />
+      </section>
 
       <section style={{ display: "flex", flexDirection: "column", gap: 14 }}>
         <h2 style={{ fontSize: 16, fontWeight: 800, margin: 0 }}>Brand brief</h2>

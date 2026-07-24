@@ -106,6 +106,15 @@ export async function updateLeadStage(userId: string, id: string, status: LeadSt
     .where(and(eq(leads.userId, userId), eq(leads.id, id)));
 }
 
+export async function updateLeadAfterOutreach(userId: string, id: string, status: LeadStatus, score: number) {
+  const db = getDb();
+  if (!db) return;
+  await db
+    .update(leads)
+    .set({ status, score, updatedAt: new Date() })
+    .where(and(eq(leads.userId, userId), eq(leads.id, id)));
+}
+
 export async function assignLeadAgent(userId: string, id: string, agentId: string | null) {
   const db = getDb();
   if (!db) return;

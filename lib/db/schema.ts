@@ -1,4 +1,4 @@
-import { boolean, index, integer, jsonb, pgTable, primaryKey, text, timestamp, uuid } from "drizzle-orm/pg-core";
+import { bigserial, boolean, index, integer, jsonb, pgTable, primaryKey, text, timestamp, uuid } from "drizzle-orm/pg-core";
 
 // The account. id is the Clerk user id (text), not a UUID — Clerk owns auth,
 // so there is no passwordHash here.
@@ -211,4 +211,36 @@ export const proposals = pgTable(
     sentAt: timestamp("sent_at", { withTimezone: true }),
   },
   (t) => [index("proposals_user_lead_idx").on(t.userId, t.leadId)]
+);
+
+// Booked calls — the calendar's only source of truth.
+export const meetings = pgTable(
+  "meetings",
+  {
+    id: uuid("id").primaryKey().defaultRandom(),
+    userId: text("user_id").notNull().references(() => users.id),
+    agentId: text("agent_id"),
+    leadId: uuid("lead_id").references(() => leads.id, { onDelete: "cascade" }),
+    title: text("title").notNull().default(""),
+    kind: text("kind").notNull().default("call"),
+    whenAt: timestamp("when_at", { withTimezone: true }).notNull(),
+    whenLabel: text("when_label").notNull().default(""),
+    createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+  },
+  (t) => [index("meetings_user_when_idx").on(t.userId, t.whenAt)]
+);
+
+// The team group chat. Every message — the creator's and each agent's — sits
+// in one shared thread per user, ordered by id.
+export const messages = pgTable(
+  "messages",
+  {
+    id: bigserial("id", { mode: "number" }).primaryKey(),
+    userId: text("user_id").notNull().references(() => users.id),
+    agentId: text("agent_id"),
+    who: text("who").notNull(),
+    text: text("text").notNull(),
+    createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+  },
+  (t) => [index("messages_user_id_idx").on(t.userId, t.id)]
 );

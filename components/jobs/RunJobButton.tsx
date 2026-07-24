@@ -1,12 +1,13 @@
 "use client";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { enqueueFollowupAction, enqueueProposalAction, enqueueResearchAction } from "@/lib/jobs/actions";
+import { enqueueFollowupAction, enqueueOutreachAction, enqueueProposalAction, enqueueResearchAction } from "@/lib/jobs/actions";
 import { primaryButtonStyle, secondaryButtonStyle } from "@/components/forms";
 
-type Kind = "proposal" | "follow-up" | "research";
+type Kind = "outreach" | "proposal" | "follow-up" | "research";
 
 const ENQUEUE: Record<Kind, (leadId: string) => Promise<{ ok: boolean; error?: string }>> = {
+  outreach: enqueueOutreachAction,
   proposal: enqueueProposalAction,
   "follow-up": enqueueFollowupAction,
   research: enqueueResearchAction,

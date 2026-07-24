@@ -60,7 +60,7 @@ const DEMO_STATS = {
   ],
 };
 
-const DEMO_ACTIVITY: { agentId: string; text: string }[] = [
+const DEMO_ACTIVITY: { agentId: string | null; text: string }[] = [
   { agentId: "scheduler", text: "booked a call with Northwind Apparel" },
   { agentId: "followup", text: "followed up with Bright Sky Beverages" },
   { agentId: "proposal", text: "sent a proposal to Ridgeline Outdoors" },
@@ -68,9 +68,31 @@ const DEMO_ACTIVITY: { agentId: string; text: string }[] = [
   { agentId: "discovery", text: "found 3 new fitness brands to pitch" },
 ];
 
-export default function OrbitDashboard({ agents: agentsProp, teams: teamsProp }: { agents?: OrbitAgent[]; teams?: OrbitTeamPill[] }) {
+interface OrbitStats {
+  activeAgents: number;
+  tasksRunning: number;
+  leadsWorked: number;
+  perAgent: { agentId: string; leadsWorked: number }[];
+}
+
+interface OrbitActivityItem {
+  agentId: string | null;
+  text: string;
+}
+
+export default function OrbitDashboard({
+  agents: agentsProp,
+  teams: teamsProp,
+  stats: statsProp,
+  activity: activityProp,
+}: {
+  agents?: OrbitAgent[];
+  teams?: OrbitTeamPill[];
+  stats?: OrbitStats;
+  activity?: OrbitActivityItem[];
+}) {
   const agents = agentsProp ?? AGENT_TYPES;
-  const byId = (id: string) => agents.find((a) => a.id === id);
+  const byId = (id: string | null) => agents.find((a) => a.id === id);
   const teamPills: OrbitTeamPill[] = [
     { id: "all", label: "Everyone", members: agents.map((a) => a.id) },
     ...(teamsProp ?? [{ id: "deal-team", label: "Deal Team", members: agents.map((a) => a.id) }]),
@@ -104,8 +126,8 @@ export default function OrbitDashboard({ agents: agentsProp, teams: teamsProp }:
     return () => clearInterval(hub);
   }, []);
 
-  const ws = DEMO_STATS;
-  const acts = DEMO_ACTIVITY;
+  const ws = statsProp ?? DEMO_STATS;
+  const acts = activityProp ?? DEMO_ACTIVITY;
   const paMap = new Map(ws.perAgent.map((p) => [p.agentId, p]));
   const maxOut = Math.max(1, ...ws.perAgent.map((p) => p.leadsWorked));
 
@@ -129,7 +151,7 @@ export default function OrbitDashboard({ agents: agentsProp, teams: teamsProp }:
   const tasksRunning = ws.tasksRunning;
   const monthLabel = new Date().toLocaleString("en-US", { month: "long" }).toUpperCase();
 
-  const actLine = (f?: { agentId: string; text: string }) => (f ? (byId(f.agentId)?.name ?? "Agent") + " " + f.text : "");
+  const actLine = (f?: { agentId: string | null; text: string }) => (f ? (byId(f.agentId)?.name ?? "Agent") + " " + f.text : "");
   const hubLive = actLine(acts[0]).slice(0, 90);
   const hubLive2 = actLine(acts[1]).slice(0, 90);
 

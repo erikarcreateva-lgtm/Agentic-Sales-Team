@@ -4,6 +4,8 @@ import { usePathname, useRouter } from "next/navigation";
 import Link from "next/link";
 import { UserButton } from "@clerk/nextjs";
 import type { ReactNode } from "react";
+import NotificationsBell from "./NotificationsBell";
+import type { NotificationItem } from "@/lib/activity/store";
 
 interface NavItem {
   href: string;
@@ -43,10 +45,12 @@ function NavIcon({ shape, size = 18 }: { shape: string; size?: number }) {
 export default function AppFrameShell({
   name,
   email,
+  notifications,
   children,
 }: {
   name: string;
   email: string;
+  notifications: NotificationItem[];
   children: ReactNode;
 }) {
   const pathname = usePathname();
@@ -232,6 +236,7 @@ export default function AppFrameShell({
           </button>
 
           <div style={{ marginLeft: "auto", display: "flex", alignItems: "center", gap: 12 }}>
+            <NotificationsBell items={notifications} />
             <span className="app-username" style={{ fontSize: 14, fontWeight: 600, color: "var(--color-ink)" }}>
               {name || email}
             </span>
