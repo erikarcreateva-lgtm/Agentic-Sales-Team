@@ -244,3 +244,26 @@ export const messages = pgTable(
   },
   (t) => [index("messages_user_id_idx").on(t.userId, t.id)]
 );
+
+// Connected socials (TikTok). Tokens are encrypted at rest before storage —
+// never stored or sent to the browser in plain text.
+export const socialAccounts = pgTable(
+  "social_accounts",
+  {
+    userId: text("user_id").notNull().references(() => users.id),
+    provider: text("provider").notNull(),
+    openId: text("open_id"),
+    username: text("username"),
+    displayName: text("display_name"),
+    avatarUrl: text("avatar_url"),
+    accessToken: text("access_token"),
+    refreshToken: text("refresh_token"),
+    tokenExpiresAt: timestamp("token_expires_at", { withTimezone: true }),
+    refreshExpiresAt: timestamp("refresh_expires_at", { withTimezone: true }),
+    scope: text("scope"),
+    snapshot: jsonb("snapshot").notNull().default({}),
+    needsReconnect: boolean("needs_reconnect").notNull().default(false),
+    connectedAt: timestamp("connected_at", { withTimezone: true }).notNull().defaultNow(),
+  },
+  (t) => [primaryKey({ columns: [t.userId, t.provider] })]
+);

@@ -85,11 +85,13 @@ export default function OrbitDashboard({
   teams: teamsProp,
   stats: statsProp,
   activity: activityProp,
+  avatarUrl,
 }: {
   agents?: OrbitAgent[];
   teams?: OrbitTeamPill[];
   stats?: OrbitStats;
   activity?: OrbitActivityItem[];
+  avatarUrl?: string | null;
 }) {
   const agents = agentsProp ?? AGENT_TYPES;
   const byId = (id: string | null) => agents.find((a) => a.id === id);
@@ -225,10 +227,17 @@ export default function OrbitDashboard({
               <div style={css("position:absolute;left:0;top:0;right:0;bottom:0;border-radius:50%;border:2px solid rgba(146,112,215,.5);animation:ringPulse 3s ease-out 1.5s infinite")} />
               <div style={css("width:124px;height:124px;border-radius:50%;border:6px solid var(--color-violet);display:flex;align-items:center;justify-content:center;background:#fff")}>
                 <div style={css("width:100px;height:100px;border-radius:50%;background:var(--color-canvas);display:flex;flex-direction:column;align-items:center;justify-content:center;overflow:hidden")}>
-                  <div style={css("font-size:26px;font-weight:900;color:var(--color-ink);line-height:1")}>{leadsWorked}</div>
-                  <div style={css("font-size:8.5px;font-weight:700;letter-spacing:.1em;color:var(--color-fog);margin-top:4px;text-align:center;line-height:1.4")}>
-                    BRANDS WORKED<br />{monthLabel}
-                  </div>
+                  {avatarUrl ? (
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img src={avatarUrl} alt="" style={{ width: "100%", height: "100%", objectFit: "cover", borderRadius: "50%" }} />
+                  ) : (
+                    <>
+                      <div style={css("font-size:26px;font-weight:900;color:var(--color-ink);line-height:1")}>{leadsWorked}</div>
+                      <div style={css("font-size:8.5px;font-weight:700;letter-spacing:.1em;color:var(--color-fog);margin-top:4px;text-align:center;line-height:1.4")}>
+                        BRANDS WORKED<br />{monthLabel}
+                      </div>
+                    </>
+                  )}
                 </div>
               </div>
             </div>

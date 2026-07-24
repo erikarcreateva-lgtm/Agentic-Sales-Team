@@ -3,17 +3,19 @@ import OrbitDashboard from "@/components/OrbitDashboard";
 import { listAgents } from "@/lib/agents/store";
 import { listTeams } from "@/lib/teams/store";
 import { getDashboardStats, getRecentActivity, getWorkingAgentIds } from "@/lib/analytics/store";
+import { getSocialAccount } from "@/lib/social/store";
 
 export default async function DashboardPage() {
   const { userId } = await auth();
   if (!userId) return <OrbitDashboard agents={[]} teams={[]} />;
 
-  const [agentsRaw, teams, workingIds, stats, activity] = await Promise.all([
+  const [agentsRaw, teams, workingIds, stats, activity, tiktok] = await Promise.all([
     listAgents(userId),
     listTeams(userId),
     getWorkingAgentIds(userId),
     getDashboardStats(userId),
     getRecentActivity(userId),
+    getSocialAccount(userId, "tiktok"),
   ]);
 
   // Live status: an agent only shows "working" while it has a job actually
@@ -25,5 +27,5 @@ export default async function DashboardPage() {
 
   const teamPills = teams.map((t) => ({ id: t.id, label: t.name, members: t.members }));
 
-  return <OrbitDashboard agents={agents} teams={teamPills} stats={stats} activity={activity} />;
+  return <OrbitDashboard agents={agents} teams={teamPills} stats={stats} activity={activity} avatarUrl={tiktok?.avatarUrl} />;
 }
