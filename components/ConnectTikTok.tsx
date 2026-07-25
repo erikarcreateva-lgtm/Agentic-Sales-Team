@@ -29,7 +29,17 @@ export default function ConnectTikTok({ configured, account }: { configured: boo
         </div>
       </div>
       {account ? (
-        <span style={{ fontSize: 13, fontWeight: 700, color: "#1B7A3D" }}>Connected</span>
+        <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
+          <span style={{ fontSize: 13, fontWeight: 700, color: "#1B7A3D" }}>Connected</span>
+          <form action="/api/auth/tiktok/refresh" method="POST">
+            <button
+              type="submit"
+              style={{ fontSize: 13, fontWeight: 600, color: "var(--color-fog)", background: "none", border: "none", textDecoration: "underline", cursor: "pointer", padding: 0 }}
+            >
+              Refresh stats & photo
+            </button>
+          </form>
+        </div>
       ) : (
         <a href="/api/auth/tiktok/start" style={primaryButtonStyle}>
           Connect TikTok

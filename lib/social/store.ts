@@ -2,7 +2,7 @@ import "server-only";
 import { and, eq } from "drizzle-orm";
 import { getDb } from "@/lib/db";
 import { socialAccounts } from "@/lib/db/schema";
-import { encryptToken } from "./crypto";
+import { encryptToken, decryptToken } from "./crypto";
 
 export interface SocialAccount {
   provider: string;
@@ -24,6 +24,14 @@ export async function getSocialAccount(userId: string, provider: string): Promis
     avatarUrl: row.avatarUrl ?? "",
     connectedAt: row.connectedAt.toISOString(),
   };
+}
+
+export async function getSocialAccountRefreshToken(userId: string, provider: string): Promise<string | null> {
+  const db = getDb();
+  if (!db) return null;
+  const [row] = await db.select().from(socialAccounts).where(and(eq(socialAccounts.userId, userId), eq(socialAccounts.provider, provider)));
+  if (!row?.refreshToken) return null;
+  return decryptToken(row.refreshToken);
 }
 
 export async function saveSocialAccount(

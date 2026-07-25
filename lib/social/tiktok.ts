@@ -25,6 +25,30 @@ export interface TikTokTokens {
   scope: string;
 }
 
+export async function refreshTikTokTokens(refreshToken: string): Promise<TikTokTokens> {
+  const res = await fetch("https://open.tiktokapis.com/v2/oauth/token/", {
+    method: "POST",
+    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+    body: new URLSearchParams({
+      client_key: process.env.TIKTOK_CLIENT_KEY!,
+      client_secret: process.env.TIKTOK_CLIENT_SECRET!,
+      refresh_token: refreshToken,
+      grant_type: "refresh_token",
+    }),
+  });
+  if (!res.ok) throw new Error(`TikTok token refresh failed: ${res.status}`);
+  const json = await res.json();
+  if (json.error) throw new Error(`TikTok token refresh failed: ${json.error_description ?? json.error}`);
+  return {
+    accessToken: json.access_token,
+    refreshToken: json.refresh_token,
+    expiresIn: json.expires_in,
+    refreshExpiresIn: json.refresh_expires_in,
+    openId: json.open_id,
+    scope: json.scope,
+  };
+}
+
 export async function exchangeCodeForTokens(code: string): Promise<TikTokTokens> {
   const res = await fetch("https://open.tiktokapis.com/v2/oauth/token/", {
     method: "POST",
