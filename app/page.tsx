@@ -245,7 +245,15 @@ function Footer() {
         }}
       >
         <span style={{ fontSize: 14, fontWeight: 700 }}>Agentic Sales Team</span>
-        <span style={{ fontSize: 14, color: "var(--color-fog)" }}>© {new Date().getFullYear()} Agentic Sales Team. All rights reserved.</span>
+        <div style={{ display: "flex", alignItems: "center", gap: 20 }}>
+          <Link href="/terms" style={{ fontSize: 14, color: "var(--color-fog)" }}>
+            Terms
+          </Link>
+          <Link href="/privacy" style={{ fontSize: 14, color: "var(--color-fog)" }}>
+            Privacy
+          </Link>
+          <span style={{ fontSize: 14, color: "var(--color-fog)" }}>© {new Date().getFullYear()} Agentic Sales Team. All rights reserved.</span>
+        </div>
       </div>
     </footer>
   );
