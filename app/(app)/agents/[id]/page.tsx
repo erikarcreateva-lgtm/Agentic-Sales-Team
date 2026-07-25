@@ -22,7 +22,7 @@ export default async function AgentDetailPage({ params }: { params: { id: string
         mode="edit"
         agentId={agent.id}
         isPreset={agent.isPreset}
-        initial={{ name: agent.name, role: agent.role, color: agent.color, goal: agent.goal, capabilities: agent.capabilities }}
+        initial={{ name: agent.name, role: agent.role, color: agent.color, emoji: agent.emoji, goal: agent.goal, capabilities: agent.capabilities }}
       />
     </div>
   );

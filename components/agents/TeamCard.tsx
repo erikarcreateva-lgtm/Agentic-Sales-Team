@@ -26,7 +26,7 @@ export default function TeamCard({ team, agents }: { team: TeamRecord; agents: A
               borderRadius: "50%",
               background: m.color,
               color: "#fff",
-              fontSize: 11,
+              fontSize: 15,
               fontWeight: 700,
               display: "flex",
               alignItems: "center",
@@ -35,7 +35,7 @@ export default function TeamCard({ team, agents }: { team: TeamRecord; agents: A
               marginLeft: -8,
             }}
           >
-            {m.initials}
+            {m.emoji}
           </div>
         ))}
       </div>

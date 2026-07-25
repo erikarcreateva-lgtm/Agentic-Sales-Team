@@ -23,6 +23,7 @@ export async function listAgents(userId: string): Promise<AgentRecord[]> {
       id: preset.id,
       name: preset.name,
       initials: preset.initials,
+      emoji: preset.emoji,
       role: preset.role,
       color: preset.color,
       status: preset.status,
@@ -51,6 +52,7 @@ export async function listAgents(userId: string): Promise<AgentRecord[]> {
       id: preset.id,
       name: settings.name ?? preset.name,
       initials: settings.initials ?? preset.initials,
+      emoji: settings.emoji ?? preset.emoji,
       role: config?.role ?? preset.role,
       color: settings.color ?? preset.color,
       status: state?.paused ? "offline" : preset.status,
@@ -68,6 +70,7 @@ export async function listAgents(userId: string): Promise<AgentRecord[]> {
       id: row.id,
       name: row.name,
       initials: row.initials,
+      emoji: row.char || "🤖",
       role: row.role,
       color: row.color,
       status: state?.paused ? "offline" : (row.status as AgentRecord["status"]),
@@ -96,6 +99,7 @@ export async function createAgent(userId: string, input: AgentInput): Promise<st
     id,
     name: input.name,
     initials: input.initials,
+    char: input.emoji,
     role: input.role,
     color: input.color,
     status: "waiting",
@@ -127,9 +131,10 @@ export async function updateAgent(userId: string, id: string, patch: Partial<Age
     return;
   }
 
+  const { emoji, ...rest } = patch;
   await db
     .update(agents)
-    .set(patch)
+    .set(emoji !== undefined ? { ...rest, char: emoji } : rest)
     .where(and(eq(agents.userId, userId), eq(agents.id, id)));
 }
 

@@ -12,6 +12,7 @@ interface OrbitAgent {
   id: string;
   name: string;
   initials: string;
+  emoji: string;
   color: string;
   status: StatusKey;
   capabilities: CapabilityId[];
@@ -261,7 +262,7 @@ export default function OrbitDashboard({
               <div style={css("display:flex;flex-direction:column;align-items:center;gap:6px;animation:floaty " + (5 + (n.i % 3)) + "s ease-in-out " + (n.i * 0.45).toFixed(2) + "s infinite")}>
                 <div style={css("position:relative")}>
                   <div style={css("padding:3px;border-radius:50%;background:#fff;border:1px solid var(--color-linen)")}>
-                    <div style={css(av(n.a, 46) + ";border:2px solid #fff")}>{n.a.initials}</div>
+                    <div style={css(av(n.a, 46) + ";border:2px solid #fff;font-size:20px")}>{n.a.emoji}</div>
                   </div>
                   <div style={css("position:absolute;top:-8px;right:-10px;width:22px;height:22px;border-radius:50%;background:#fff;border:1px solid var(--color-linen);display:flex;align-items:center;justify-content:center;animation:" + n.ic[0])}>
                     <span style={css(hubIcon(n.type, n.ic[1]))} />

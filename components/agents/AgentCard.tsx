@@ -28,14 +28,14 @@ export default function AgentCard({ agent }: { agent: AgentRecord }) {
             background: agent.color,
             color: "#fff",
             fontWeight: 700,
-            fontSize: 15,
+            fontSize: 20,
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
             flex: "none",
           }}
         >
-          {agent.initials}
+          {agent.emoji}
         </div>
         <div style={{ minWidth: 0 }}>
           <div style={{ fontSize: 15, fontWeight: 700, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{agent.name}</div>

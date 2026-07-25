@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 import { createAgentAction, updateAgentAction } from "@/lib/agents/actions";
 import type { AgentInput } from "@/lib/agents/types";
 import { CAPABILITIES, type CapabilityId } from "@/lib/agentTypes";
-import { AGENT_COLORS, initialsFromName } from "@/components/agents/palette";
+import { AGENT_COLORS, AGENT_EMOJIS, initialsFromName } from "@/components/agents/palette";
 import { Field, primaryButtonStyle, TextArea, TextInput } from "@/components/forms";
 
 export default function AgentForm({
@@ -22,6 +22,7 @@ export default function AgentForm({
   const [name, setName] = useState(initial.name);
   const [role, setRole] = useState(initial.role);
   const [color, setColor] = useState(initial.color);
+  const [emoji, setEmoji] = useState(initial.emoji ?? "🤖");
   const [goal, setGoal] = useState(initial.goal);
   const [capabilities, setCapabilities] = useState<Set<CapabilityId>>(new Set(initial.capabilities));
   const [saving, setSaving] = useState(false);
@@ -40,7 +41,7 @@ export default function AgentForm({
 
   async function submit() {
     setSaving(true);
-    const input: AgentInput = { name: name.trim(), initials: initialsFromName(name), role: role.trim(), color, goal, capabilities: [...capabilities] };
+    const input: AgentInput = { name: name.trim(), initials: initialsFromName(name), emoji, role: role.trim(), color, goal, capabilities: [...capabilities] };
     if (mode === "create") {
       const res = await createAgentAction(input);
       setSaving(false);
@@ -48,7 +49,7 @@ export default function AgentForm({
       return;
     }
     if (agentId) {
-      const patch = isPreset ? { name: input.name, initials: input.initials, role: input.role, color: input.color, goal: input.goal } : input;
+      const patch = isPreset ? { name: input.name, initials: input.initials, emoji: input.emoji, role: input.role, color: input.color, goal: input.goal } : input;
       await updateAgentAction(agentId, patch);
     }
     setSaving(false);
@@ -80,6 +81,49 @@ export default function AgentForm({
               }}
             />
           ))}
+        </div>
+      </Field>
+      <Field label="Avatar" hint="Pick a cute icon for this helper.">
+        <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
+          <div
+            style={{
+              width: 48,
+              height: 48,
+              borderRadius: "50%",
+              background: color,
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              fontSize: 24,
+              flex: "none",
+            }}
+          >
+            {emoji}
+          </div>
+          <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
+            {AGENT_EMOJIS.map((e) => (
+              <button
+                key={e}
+                type="button"
+                aria-label={e}
+                onClick={() => setEmoji(e)}
+                style={{
+                  width: 32,
+                  height: 32,
+                  borderRadius: "50%",
+                  background: "var(--color-linen)",
+                  fontSize: 16,
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  border: emoji === e ? "2px solid var(--color-ink)" : "2px solid transparent",
+                  cursor: "pointer",
+                }}
+              >
+                {e}
+              </button>
+            ))}
+          </div>
         </div>
       </Field>
       <Field label="What can it do?" hint={isPreset ? "Presets keep their one job." : "Pick one or more capabilities."}>

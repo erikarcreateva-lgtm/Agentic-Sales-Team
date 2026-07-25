@@ -80,14 +80,14 @@ export default function TeamForm({
                   borderRadius: "50%",
                   background: a.color,
                   color: "#fff",
-                  fontSize: 10,
+                  fontSize: 13,
                   fontWeight: 700,
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
                 }}
               >
-                {a.initials}
+                {a.emoji}
               </span>
               <span style={{ fontSize: 14, fontWeight: 600 }}>{a.name}</span>
               <span style={{ fontSize: 12, color: "var(--color-stone)" }}>{a.role}</span>

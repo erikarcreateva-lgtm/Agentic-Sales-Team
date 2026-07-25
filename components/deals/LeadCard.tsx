@@ -52,7 +52,7 @@ export default function LeadCard({ lead, agents }: { lead: Lead; agents: AgentRe
             padding: "3px 9px",
           }}
         >
-          {agent.initials}
+          {agent.emoji}
         </span>
       )}
 

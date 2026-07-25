@@ -47,14 +47,14 @@ export default function ChatThread({ messages, agents }: { messages: ChatMessage
                       borderRadius: "50%",
                       background: agent?.color ?? "var(--color-stone)",
                       color: "#fff",
-                      fontSize: 9,
+                      fontSize: 11,
                       fontWeight: 700,
                       display: "flex",
                       alignItems: "center",
                       justifyContent: "center",
                     }}
                   >
-                    {agent?.initials ?? "AI"}
+                    {agent?.emoji ?? "🤖"}
                   </span>
                   <span style={{ fontSize: 12, fontWeight: 700, color: "var(--color-fog)" }}>{agent?.name ?? "Team"}</span>
                 </div>

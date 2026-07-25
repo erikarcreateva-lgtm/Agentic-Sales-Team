@@ -5,6 +5,7 @@ export interface AgentRecord {
   id: string;
   name: string;
   initials: string;
+  emoji: string;
   role: string;
   color: string;
   status: StatusKey;
@@ -18,6 +19,7 @@ export interface AgentRecord {
 export interface AgentInput {
   name: string;
   initials: string;
+  emoji: string;
   role: string;
   color: string;
   goal: string;
