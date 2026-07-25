@@ -54,7 +54,7 @@ export default function ChatThread({ messages, agents }: { messages: ChatMessage
                       justifyContent: "center",
                     }}
                   >
-                    {agent?.emoji ?? "🤖"}
+                    {agent?.emoji ?? "🧑"}
                   </span>
                   <span style={{ fontSize: 12, fontWeight: 700, color: "var(--color-fog)" }}>{agent?.name ?? "Team"}</span>
                 </div>

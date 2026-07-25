@@ -30,11 +30,11 @@ export interface AgentType {
 
 // The premade "Deal Team" — every creator starts with these five.
 export const AGENT_TYPES: AgentType[] = [
-  { id: "discovery", name: "Remy Rivera", initials: "RR", emoji: "🔍", role: "Research", color: "#0EA5E9", capabilities: ["scrape", "research"], status: "working" },
-  { id: "outreach", name: "Otis Vance", initials: "OV", emoji: "📨", role: "Initial Outreach", color: "#5122C1", capabilities: ["outreach"], status: "working" },
-  { id: "proposal", name: "Priya Shah", initials: "PS", emoji: "📝", role: "Proposal", color: "#7C3AED", capabilities: ["proposal"], status: "waiting" },
-  { id: "followup", name: "Faye Cole", initials: "FC", emoji: "💌", role: "Follow-up", color: "#8B5CF6", capabilities: ["follow-up"], status: "working" },
-  { id: "scheduler", name: "Sam Okafor", initials: "SO", emoji: "📅", role: "Scheduler", color: "#F43F7E", capabilities: ["book-meeting"], status: "waiting" },
+  { id: "discovery", name: "Remy Rivera", initials: "RR", emoji: "🧑‍🦰", role: "Research", color: "#0EA5E9", capabilities: ["scrape", "research"], status: "working" },
+  { id: "outreach", name: "Otis Vance", initials: "OV", emoji: "🧔🏽", role: "Initial Outreach", color: "#5122C1", capabilities: ["outreach"], status: "working" },
+  { id: "proposal", name: "Priya Shah", initials: "PS", emoji: "👩🏽‍🦱", role: "Proposal", color: "#7C3AED", capabilities: ["proposal"], status: "waiting" },
+  { id: "followup", name: "Faye Cole", initials: "FC", emoji: "👩🏾", role: "Follow-up", color: "#8B5CF6", capabilities: ["follow-up"], status: "working" },
+  { id: "scheduler", name: "Sam Okafor", initials: "SO", emoji: "👨🏻‍🦳", role: "Scheduler", color: "#F43F7E", capabilities: ["book-meeting"], status: "waiting" },
 ];
 
 export const TEAM_TEMPLATES = [

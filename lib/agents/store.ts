@@ -70,7 +70,7 @@ export async function listAgents(userId: string): Promise<AgentRecord[]> {
       id: row.id,
       name: row.name,
       initials: row.initials,
-      emoji: row.char || "🤖",
+      emoji: row.char || "🧑",
       role: row.role,
       color: row.color,
       status: state?.paused ? "offline" : (row.status as AgentRecord["status"]),

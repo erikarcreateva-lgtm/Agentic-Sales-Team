@@ -22,7 +22,7 @@ export default function AgentForm({
   const [name, setName] = useState(initial.name);
   const [role, setRole] = useState(initial.role);
   const [color, setColor] = useState(initial.color);
-  const [emoji, setEmoji] = useState(initial.emoji ?? "🤖");
+  const [emoji, setEmoji] = useState(initial.emoji ?? "🧑");
   const [goal, setGoal] = useState(initial.goal);
   const [capabilities, setCapabilities] = useState<Set<CapabilityId>>(new Set(initial.capabilities));
   const [saving, setSaving] = useState(false);
