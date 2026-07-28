@@ -105,6 +105,16 @@ a {
   }
 }
 
+.landing-nav-links {
+  display: none;
+}
+
+@media (min-width: 780px) {
+  .landing-nav-links {
+    display: flex;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: .001ms !important;

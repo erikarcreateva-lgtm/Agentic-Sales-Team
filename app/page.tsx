@@ -51,13 +51,14 @@ function Nav() {
         style={{
           width: "100%",
           maxWidth: "var(--max-width)",
-          padding: "0 26px",
+          padding: "0 16px",
           display: "flex",
           alignItems: "center",
           justifyContent: "space-between",
+          gap: 8,
         }}
       >
-        <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+        <div style={{ display: "flex", alignItems: "center", gap: 8, minWidth: 0, flex: "none" }}>
           <div
             style={{
               width: 28,
@@ -70,27 +71,29 @@ function Nav() {
               color: "#fff",
               fontWeight: 900,
               fontSize: 15,
+              flex: "none",
             }}
           >
             A
           </div>
-          <span style={{ fontWeight: 700, fontSize: 16 }}>Agentic Sales Team</span>
+          <span style={{ fontWeight: 700, fontSize: 15, whiteSpace: "nowrap" }}>Agentic Sales Team</span>
         </div>
-        <div style={{ display: "flex", alignItems: "center", gap: 28 }}>
-          <a href="#features" style={{ fontSize: 14, fontWeight: 500, color: "var(--color-fog)" }}>Features</a>
-          <a href="#how-it-works" style={{ fontSize: 14, fontWeight: 500, color: "var(--color-fog)" }}>How it works</a>
-          <a href="#who-for" style={{ fontSize: 14, fontWeight: 500, color: "var(--color-fog)" }}>Who it&apos;s for</a>
+        <div className="landing-nav-links" style={{ alignItems: "center", gap: 28, flex: "none" }}>
+          <a href="#features" style={{ fontSize: 14, fontWeight: 500, color: "var(--color-fog)", whiteSpace: "nowrap" }}>Features</a>
+          <a href="#how-it-works" style={{ fontSize: 14, fontWeight: 500, color: "var(--color-fog)", whiteSpace: "nowrap" }}>How it works</a>
+          <a href="#who-for" style={{ fontSize: 14, fontWeight: 500, color: "var(--color-fog)", whiteSpace: "nowrap" }}>Who it&apos;s for</a>
         </div>
-        <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+        <div style={{ display: "flex", alignItems: "center", gap: 8, flex: "none" }}>
           <Link
             href="/sign-in"
             style={{
-              fontSize: 14,
+              fontSize: 13,
               fontWeight: 600,
-              padding: "10px 18px",
+              padding: "9px 12px",
               borderRadius: "var(--radius-btn)",
               border: "1px solid var(--color-ink)",
               color: "var(--color-ink)",
+              whiteSpace: "nowrap",
             }}
           >
             Log in
@@ -98,12 +101,13 @@ function Nav() {
           <Link
             href="/sign-up"
             style={{
-              fontSize: 14,
+              fontSize: 13,
               fontWeight: 600,
-              padding: "10px 20px",
+              padding: "9px 14px",
               borderRadius: "var(--radius-btn)",
               background: "var(--color-red)",
               color: "#fff",
+              whiteSpace: "nowrap",
             }}
           >
             Sign up
