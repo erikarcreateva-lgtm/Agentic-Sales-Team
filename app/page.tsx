@@ -118,7 +118,7 @@ function Hero() {
   return (
     <section style={{ padding: "40px 0 80px", display: "flex", flexDirection: "column", gap: 40 }}>
       <div style={{ animation: "fadeUp .5s ease" }}>
-        <OrbitDashboard />
+        <OrbitDashboard avatarUrl="/icon.jpg" />
       </div>
       <div style={{ textAlign: "center", display: "flex", flexDirection: "column", alignItems: "center", gap: 20, animation: "fadeUp .6s ease" }}>
         <h1 style={{ fontSize: 50, fontWeight: 900, lineHeight: 1.1, letterSpacing: "-1.85px", margin: 0 }}>
